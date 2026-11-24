@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Connection</title><link rel="stylesheet" href="style.css"></head><body><main>
+<h1>TikTok connection</h1>
+<div id="out">No authorization code in this address.</div>
+<script>
+const p = new URLSearchParams(location.search);
+const o = document.getElementById('out');
+if (p.get('error')) o.textContent = 'TikTok returned an error: ' + p.get('error') + ' ' + (p.get('error_description') || '');
+else if (p.get('code')) {
+  o.innerHTML = '<p>Copy this single-use code (valid a few minutes):</p><span class="code" id="c"></span><p><button id="b">Copy</button></p>';
+  document.getElementById('c').textContent = p.get('code');
+  document.getElementById('b').onclick = () => navigator.clipboard && navigator.clipboard.writeText(p.get('code'));
+}
+</script></main></body></html>
